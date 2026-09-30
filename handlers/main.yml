@@ -13,7 +13,7 @@
     src: "{{ qbittorrent_conf_copy.dest }}"
     dest: "{{ qbittorrent_conf_copy.src }}"
     remote_src: true
-    owner: "{{ qbittorrent_user }}"
+    owner: "{{ 'root' if qbittorrent_config_read_only else qbittorrent_user }}"
     group: "{{ qbittorrent_group }}"
     mode: "0640"
   listen:

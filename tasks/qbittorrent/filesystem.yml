@@ -1,8 +1,24 @@
 ---
+# Need sticky bit so that qb can't delete and re-create qBittorrent.conf
+# Directory needs to remain writeable because it's used for other state data
 - name: Create qBittorrent data directory
+  become: true
   ansible.builtin.file:
     path: "{{ qbittorrent_data_dir }}"
     state: directory
-    owner: "{{ qbittorrent_user }}"
+    owner: "{{ 'root' if qbittorrent_config_read_only else qbittorrent_user }}"
     group: "{{ qbittorrent_group }}"
-    mode: "0755"
+    mode: "{{ '1775' if qbittorrent_config_read_only else '0755' }}"
+
+# This directory can be modified by qBittorrent,
+# but we need special sticky bit and `root` as owner
+# so that qBittorrent cannot delete and re-create the configuration file
+- name: Make qBittorrent config read-only
+  become: true
+  ansible.builtin.file:
+    path: "{{ qbittorrent_conf_file | dirname }}"
+    state: directory
+    owner: root
+    group: "{{ qbittorrent_group }}"
+    mode: '1755'
+  when: qbittorrent_config_read_only
