@@ -1,7 +1,7 @@
 ---
 - name: "Write configuration to qBittorrent.conf : {{ section.name }}"
   become: true
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     path: "{{ qbittorrent_data_dir }}/qBittorrent/config/qBittorrent.conf"
     section: "{{ section.name }}"
     option: "{{ option.name }}"
