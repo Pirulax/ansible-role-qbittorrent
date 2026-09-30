@@ -15,10 +15,10 @@
 
 - name: Install qBittorrent
   ansible.builtin.include_tasks:
-    file: release.yml
+    file: install.yml
     apply:
-      tags: [release]
-  tags: [release]
+      tags: [install]
+  tags: [install]
 
 - name: Install and enable systemd service
   ansible.builtin.include_tasks:

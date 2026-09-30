@@ -1,4 +1,7 @@
 ---
+# qbittorrent version tag from https://github.com/userdocs/qbittorrent-nox-static/releases
+qbittorrent_release_tag: 'release-5.2.4_v2.0.15'
+
 qbittorrent_user: qbittorrent
 qbittorrent_group: qbittorrent
 

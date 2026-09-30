@@ -20,7 +20,7 @@
     - { section: Service, option: Type, value: exec }
     - { section: Service, option: User, value: "{{ qbittorrent_user }}" }
     - { section: Service, option: Group, value: "{{ qbittorrent_group }}" }
-    - { section: Service, option: ExecStart, value: "/usr/bin/qbittorrent-nox --profile={{ qbittorrent_data_dir }}" }
+    - { section: Service, option: ExecStart, value: "{{ qbittorrent_bin }} --profile={{ qbittorrent_data_dir }}" }
 
     # Install section
     - { section: Install, option: WantedBy, value: "multi-user.target" }

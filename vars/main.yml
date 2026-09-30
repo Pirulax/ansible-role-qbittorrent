@@ -1,1 +1,2 @@
 qbittorrent_conf_file: "{{ qbittorrent_data_dir }}/qBittorrent/config/qBittorrent.conf"
+qbittorrent_bin: /usr/local/bin/qbittorrent-nox

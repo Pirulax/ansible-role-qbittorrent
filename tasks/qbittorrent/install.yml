@@ -1,0 +1,27 @@
+---
+- name: Make sure apt package isn't installed
+  ansible.builtin.apt:
+    name: qbittorrent-nox
+    state: absent
+
+- name: Query GitHub release information
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/userdocs/qbittorrent-nox-static/releases/tags/{{ qbittorrent_release_tag }}"
+  register: qbittorrent_release_info
+
+# NOTE: This only supports Linux as-is
+- name: Find binary to download
+  vars:
+    qbittorrent_asset_name: "{{ ansible_facts['architecture'] ~ '-qbittorrent-nox' }}"
+  ansible.builtin.set_fact:
+    qbittorrent_asset: "{{ qbittorrent_release_info.json.assets | selectattr('name', 'equalto', qbittorrent_asset_name) | list | first }}"
+
+- name: Download the binary to {{ qbittorrent_bin }}
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ qbittorrent_asset.browser_download_url }}"
+    dest: "{{ qbittorrent_bin }}"
+    owner: root
+    group: root
+    mode: '0755'
+    checksum: "{{ qbittorrent_asset.digest }}"
