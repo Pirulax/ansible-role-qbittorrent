@@ -12,8 +12,8 @@
     # Unit section
     - { section: Unit, option: Documentation, value: man:qbittorrent-nox(1) }
     - { section: Unit, option: Description, value: "{{ qbittorrent_systemd_unit_description }}" }
-    - { section: Unit, option: Wants, value: "{{ qbittorrent_systemd_unit_wants }}" }
-    - { section: Unit, option: After, value: "{{ qbittorrent_systemd_unit_after }}" }
+    - { section: Unit, option: Wants, value: "{{ qbittorrent_systemd_unit_wants | join(' ') }}" }
+    - { section: Unit, option: After, value: "{{ qbittorrent_systemd_unit_after | join(' ') }}" }
     - { section: Unit, option: Requires, value: "{{ qbittorrent_systemd_unit_requires | join(' ') }}" }
 
     # Service section
