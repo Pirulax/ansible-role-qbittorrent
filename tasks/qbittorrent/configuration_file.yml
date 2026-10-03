@@ -1,12 +1,13 @@
 ---
-- name: "Write configuration to qBittorrent.conf : {{ section.name }}"
+- name: "Write configuration to qBittorrent.conf : {{ section.name }}" # noqa: risky-file-permissions
   become: true
   community.general.ini_file:
     path: "{{ qbittorrent_conf_copy.dest }}"
     section: "{{ section.name }}"
     option: "{{ option.name }}"
     value: "{{ option.value }}"
-    mode: "0640"
+    # don't touch `mode` because it will trigger a change (and we don't want to restart the service for such changes)
+    # we've already created the file with the correct permissions before running this task
     no_extra_spaces: true
   loop: "{{ section.options | dict2items(key_name='name') }}"
   loop_control:
